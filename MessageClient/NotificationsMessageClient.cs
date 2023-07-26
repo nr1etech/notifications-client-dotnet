@@ -27,12 +27,12 @@ public class NotificationsMessageClient
         });
     }
 
-    public async Task<SendResponse> SendEmail(EmailMessage message, string? organizationID = null)
+    public async Task<SendResponse> SendEmailAsync(EmailMessage message, string? organizationID = null)
     {
         return await this.notificationsMessageApi.SendEmail(message, organizationID ?? this.OrganizationID);
     }
 
-    public async Task<SendResponse> SendSms(SmsMessage message, string? organizationID = null)
+    public async Task<SendResponse> SendSmsAsync(SmsMessage message, string? organizationID = null)
     {
         return await this.notificationsMessageApi.SendSms(message, organizationID ?? this.OrganizationID);
     }

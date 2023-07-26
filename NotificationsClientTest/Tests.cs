@@ -64,8 +64,8 @@ public static class ManageTest
 
         try
         {
-            Console.WriteLine("🟩 Calling getInfo() to verify client connectivity and authentication.");
-            var info = await manager.GetInfo();
+            Console.WriteLine("🟩 Calling GetInfoAsync() to verify client connectivity and authentication.");
+            var info = await manager.GetInfoAsync();
 
             if (
                 info == null ||
@@ -78,14 +78,14 @@ public static class ManageTest
                 string.IsNullOrEmpty(info.Accounts[0].OrganizationSlug)
                )
             {
-                throw new ApplicationException("GetInfo did not have the expected result");
+                throw new ApplicationException("GetInfoAsync did not have the expected result");
             }
 
             // ***** Organization tests *****
             Console.WriteLine("🟩 Organization Tests");
             var createOrg = new CreateOrganizationData { OrganizationName = "Sanity Check", Slug = GenerateUniqueSlug("sanity-check") };
-            organization = await manager.CreateOrganization(createOrg);
-            var reOrganization = await manager.GetOrganization(organization.OrganizationID);
+            organization = await manager.CreateOrganizationAsync(createOrg);
+            var reOrganization = await manager.GetOrganizationAsync(organization.OrganizationID);
             if (
                 createOrg.Slug != organization.Slug ||
                 createOrg.OrganizationName != organization.OrganizationName ||
@@ -101,8 +101,8 @@ public static class ManageTest
             }
 
             var updateOrgData = new UpdateOrganizationData { OrganizationName = "Sanity Check Update" };
-            var updatedOrganization = await manager.UpdateOrganization(organization.OrganizationID, updateOrgData);
-            reOrganization = await manager.GetOrganization(organization.OrganizationID);
+            var updatedOrganization = await manager.UpdateOrganizationAsync(organization.OrganizationID, updateOrgData);
+            reOrganization = await manager.GetOrganizationAsync(organization.OrganizationID);
             if (
                 updateOrgData.OrganizationName != updatedOrganization.OrganizationName ||
                 updatedOrganization.OrganizationName != reOrganization.OrganizationName ||
@@ -114,7 +114,7 @@ public static class ManageTest
                 throw new ApplicationException("Update organization/Get Organization did not have the expected result");
             }
 
-            var organizationList = await manager.GetOrganizations(1);
+            var organizationList = await manager.GetOrganizationsAsync(1);
             var fOrg = organizationList.Results.FirstOrDefault();
             if (
                 fOrg == null ||
@@ -140,8 +140,8 @@ public static class ManageTest
                 AccountType = AccountType.User,
                 Role = AccountRole.Messaging,
             };
-            account = await manager.CreateAccount(createAccountData);
-            var reAccount = await manager.GetAccount(account.AccountID);
+            account = await manager.CreateAccountAsync(createAccountData);
+            var reAccount = await manager.GetAccountAsync(account.AccountID);
 
             if (
                 createAccountData.AccountType != account.AccountType ||
@@ -163,8 +163,8 @@ public static class ManageTest
             }
 
             var updateAccountData = new UpdateAccountData() { Description = "Sanity Check Update" };
-            var updatedAccount = await manager.UpdateAccount(account.AccountID, updateAccountData);
-            reAccount = await manager.GetAccount(account.AccountID);
+            var updatedAccount = await manager.UpdateAccountAsync(account.AccountID, updateAccountData);
+            reAccount = await manager.GetAccountAsync(account.AccountID);
 
             if (
                 updateAccountData.Description != updatedAccount.Description ||
@@ -182,7 +182,7 @@ public static class ManageTest
                 throw new ApplicationException("Update Account/Get Account did not have the expected result");
             }
 
-            var accountList = await manager.GetAccounts(1);
+            var accountList = await manager.GetAccountsAsync(1);
             var fAccount = accountList.Results.FirstOrDefault();
             if (
                 fAccount == null ||
@@ -213,8 +213,8 @@ public static class ManageTest
                 Subject = "Sanity Test Subject",
                 Body = "Sanity Test Body"
             };
-            emailTemplate = await manager.CreateTemplate(createEmailTemplateData);
-            var reEmailTemplate = await manager.GetTemplate(emailTemplate.TemplateID);
+            emailTemplate = await manager.CreateTemplateAsync(createEmailTemplateData);
+            var reEmailTemplate = await manager.GetTemplateAsync(emailTemplate.TemplateID);
 
             if (
                 emailTemplate.Content.Count != 1 ||
@@ -245,8 +245,8 @@ public static class ManageTest
             }
 
             var updateEmailTemplateData = new UpdateTemplateData() { Name = "Sanity Test Email Template Update", Stage = TemplateStage.Published, Subject = "Sanity Test Subject", Body = "Sanity Test Body" };
-            var updatedEmailTemplate = await manager.UpdateTemplate(emailTemplate.TemplateID, updateEmailTemplateData);
-            reEmailTemplate = await manager.GetTemplate(emailTemplate.TemplateID);
+            var updatedEmailTemplate = await manager.UpdateTemplateAsync(emailTemplate.TemplateID, updateEmailTemplateData);
+            reEmailTemplate = await manager.GetTemplateAsync(emailTemplate.TemplateID);
 
             if (
                 updateEmailTemplateData.Name != updatedEmailTemplate.Name ||
@@ -267,7 +267,7 @@ public static class ManageTest
                 throw new ApplicationException("Update template/Get template did not have the expected result");
             }
 
-            smsTemplate = await manager.CreateTemplate(new CreateTemplateData()
+            smsTemplate = await manager.CreateTemplateAsync(new CreateTemplateData()
             {
                 Slug = GenerateUniqueSlug("sanity-template"),
                 Locale = "",
@@ -277,14 +277,14 @@ public static class ManageTest
                 Type = MessageType.Sms,
                 Body = "Sanity Test Body"
             });
-            var reSmsTemplate = await manager.GetTemplate(smsTemplate.TemplateID);
+            var reSmsTemplate = await manager.GetTemplateAsync(smsTemplate.TemplateID);
 
             if (reSmsTemplate == null)
             {
                 throw new ApplicationException("Create template/Get template (sms) did not have the expected result");
             }
 
-            var templateList = await manager.GetTemplates(1);
+            var templateList = await manager.GetTemplatesAsync(1);
             var fTemplate = templateList.Results.FirstOrDefault();
             if (
                 fTemplate == null ||
@@ -306,8 +306,8 @@ public static class ManageTest
                 Status = SenderStatus.Active,
                 SenderConfiguration = new TestSenderConfiguration()
             };
-            emailSender = await manager.CreateSender(createEmailSenderData);
-            var reEmailSender = await manager.GetSender(emailSender.SenderID);
+            emailSender = await manager.CreateSenderAsync(createEmailSenderData);
+            var reEmailSender = await manager.GetSenderAsync(emailSender.SenderID);
 
             if (
                 createEmailSenderData.Name != emailSender.Name ||
@@ -329,8 +329,8 @@ public static class ManageTest
             }
 
             var updateEmailSenderData = new UpdateSenderData() { Name = "Sanity Test Email Sender Update" };
-            var updatedSender = await manager.UpdateSender(emailSender.SenderID, updateEmailSenderData);
-            reEmailSender = await manager.GetSender(emailSender.SenderID);
+            var updatedSender = await manager.UpdateSenderAsync(emailSender.SenderID, updateEmailSenderData);
+            reEmailSender = await manager.GetSenderAsync(emailSender.SenderID);
 
             if (
                 updateEmailSenderData.Name != updatedSender.Name ||
@@ -347,10 +347,10 @@ public static class ManageTest
                 throw new ApplicationException("Update organization/Get Organization did not have the expected result");
             }
 
-            smsSender = await manager.CreateSender(new CreateSenderData() { Name = "Sanity Test SMS Sender", Type = MessageType.Sms, ServiceProvider = ServiceProvider.SmsIntegrationTest, Priority = 1, Status = SenderStatus.Active, SenderConfiguration = new TestSenderConfiguration() });
-            var reSmsSender = await manager.GetSender(smsSender.SenderID);
+            smsSender = await manager.CreateSenderAsync(new CreateSenderData() { Name = "Sanity Test SMS Sender", Type = MessageType.Sms, ServiceProvider = ServiceProvider.SmsIntegrationTest, Priority = 1, Status = SenderStatus.Active, SenderConfiguration = new TestSenderConfiguration() });
+            var reSmsSender = await manager.GetSenderAsync(smsSender.SenderID);
 
-            var senderList = await manager.GetSenders(1);
+            var senderList = await manager.GetSendersAsync(1);
             var fSender = senderList.Results.FirstOrDefault();
             if (
                 fSender == null ||
@@ -369,8 +369,8 @@ public static class ManageTest
             // ***** Block tests *****
             Console.WriteLine("🟩 Block Tests");
             var createEmailBlockData = new CreateBlockData() { Recipient = "sanity-block-test@example.com", Reason = BlockReasonType.Manual, Description = "Sanity Test Block" };
-            emailBlock = await manager.CreateBlock(createEmailBlockData);
-            var reBlock = await manager.GetBlock(emailBlock.BlockID);
+            emailBlock = await manager.CreateBlockAsync(createEmailBlockData);
+            var reBlock = await manager.GetBlockAsync(emailBlock.BlockID);
 
             if (
                 createEmailBlockData.Recipient != emailBlock.Recipient ||
@@ -387,9 +387,9 @@ public static class ManageTest
                 throw new ApplicationException("Create block/Get block did not have the expected result");
             }
 
-            smsBlock = await manager.CreateBlock(new CreateBlockData() { Recipient = "+18015559999", Reason = BlockReasonType.Manual, Description = "Sanity Test Block" });
+            smsBlock = await manager.CreateBlockAsync(new CreateBlockData() { Recipient = "+18015559999", Reason = BlockReasonType.Manual, Description = "Sanity Test Block" });
 
-            var blockList = await manager.GetBlocks(1);
+            var blockList = await manager.GetBlocksAsync(1);
             var fBlock = blockList.Results.FirstOrDefault();
             if (
                 fBlock == null ||
@@ -402,23 +402,17 @@ public static class ManageTest
                 throw new ApplicationException("Get Block List did not have the expected result");
             }
 
-
-            // ***** Misc tests *****
-            Console.WriteLine("🟩 GetInfo accounts test");
-
-            await manager.GetInfo();
-
             // ***** Manager Send Email tests *****
             Console.WriteLine("🟩 Manager Send Email Tests");
             var createEmailMessageData = new CreateEmailMessage() { TemplateSlug = emailTemplate.Slug, TemplateLocale = emailTemplate.Locale, Recipient = new ManageClient.Models.Common.EmailRecipient() { Name = "Sanity Test", Email = "sanity@example.com" }, MergeValues = new MergeValues() { }, Metadata = new Dictionary<string, string>() { { "SentBy", "Sanity Test" } } };
-            message1 = await manager.CreateEmailMessage(createEmailMessageData, isTestMessage: false);
+            message1 = await manager.CreateEmailMessageAsync(createEmailMessageData, isTestMessage: false);
 
             if (string.IsNullOrEmpty(message1.MessageID))
             {
                 throw new ApplicationException("Create Email Message did not have the expected result.");
             }
 
-            var reManagerEmailMessage = await manager.GetMessage(message1.MessageID);
+            var reManagerEmailMessage = await manager.GetMessageAsync(message1.MessageID);
 
             if (
                 reManagerEmailMessage == null ||
@@ -430,11 +424,11 @@ public static class ManageTest
 
             // ***** Manager Send Sms tests *****
             Console.WriteLine("🟩 Manager Send SMS Tests");
-            message2 = await manager.CreateSmsMessage(new CreateSmsMessage() { TemplateSlug = smsTemplate.Slug, TemplateLocale = smsTemplate.Locale, Recipient = new ManageClient.Models.Common.SmsRecipient() { Phone = "+18015550011" }, MergeValues = new MergeValues() {  }, Metadata = new Dictionary<string, string>() { { "SentBy", "Sanity Test"} } }, false);
+            message2 = await manager.CreateSmsMessageAsync(new CreateSmsMessage() { TemplateSlug = smsTemplate.Slug, TemplateLocale = smsTemplate.Locale, Recipient = new ManageClient.Models.Common.SmsRecipient() { Phone = "+18015550011" }, MergeValues = new MergeValues() {  }, Metadata = new Dictionary<string, string>() { { "SentBy", "Sanity Test"} } }, false);
 
-            var reManagerSmsMessage = await manager.GetMessage(message2.MessageID);
+            var reManagerSmsMessage = await manager.GetMessageAsync(message2.MessageID);
 
-            var messageList = await manager.GetMessages(1);
+            var messageList = await manager.GetMessagesAsync(1);
 
 
             // ------------------------------------------
@@ -461,7 +455,7 @@ public static class ManageTest
             var messager = new NotificationsMessageClient(messageHttpClient, organization.OrganizationID);
 
             Console.WriteLine("🟩 Message Send Email");
-            message3 = await messager.SendEmail(new EmailMessage() {
+            message3 = await messager.SendEmailAsync(new EmailMessage() {
                 TemplateSlug = emailTemplate.Slug,
                 TemplateLocale = "sn-TY",	// This message will fall back to the default template
                 Recipient = new EmailRecipient() {
@@ -477,10 +471,10 @@ public static class ManageTest
             });
 
             // Reload the message and check that it handled the fallback
-            var reMessagerEmailMessage = await manager.GetMessage(message3.MessageID);
+            var reMessagerEmailMessage = await manager.GetMessageAsync(message3.MessageID);
 
             Console.WriteLine("🟩 Messager Send SMS Test");
-            message4 = await messager.SendSms(new SmsMessage() {
+            message4 = await messager.SendSmsAsync(new SmsMessage() {
                 TemplateSlug = smsTemplate.Slug,
                 TemplateLocale = smsTemplate.Locale,
                 Recipient = new SmsRecipient() {
@@ -502,19 +496,19 @@ public static class ManageTest
         finally
         {
             Console.WriteLine("🟩 Record Cleanup");
-            try { await DoIfNotNull(message1?.MessageID, async (string id) => await manager.DeleteMessage(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting message1", ex); }
-            try { await DoIfNotNull(message2?.MessageID, async (string id) => await manager.DeleteMessage(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting message2", ex); }
-            try { await DoIfNotNull(message3?.MessageID, async (string id) => await manager.DeleteMessage(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting message3", ex); }
-            try { await DoIfNotNull(message4?.MessageID, async (string id) => await manager.DeleteMessage(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting message4", ex); }
+            try { await DoIfNotNull(message1?.MessageID, async (string id) => await manager.DeleteMessageAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting message1", ex); }
+            try { await DoIfNotNull(message2?.MessageID, async (string id) => await manager.DeleteMessageAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting message2", ex); }
+            try { await DoIfNotNull(message3?.MessageID, async (string id) => await manager.DeleteMessageAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting message3", ex); }
+            try { await DoIfNotNull(message4?.MessageID, async (string id) => await manager.DeleteMessageAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting message4", ex); }
 
-            try { await DoIfNotNull(emailBlock?.BlockID, async (string id) => await manager.DeleteBlock(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting emailBlock", ex); }
-            try { await DoIfNotNull(smsBlock?.BlockID, async (string id) => await manager.DeleteBlock(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting smsBlock", ex); }
-            try { await DoIfNotNull(emailSender?.SenderID, async (string id) => await manager.DeleteSender(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting emailSender", ex); }
-            try { await DoIfNotNull(smsSender?.SenderID, async (string id) => await manager.DeleteSender(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting smsSender", ex); }
-            try { await DoIfNotNull(emailTemplate?.TemplateID, async (string id) => await manager.DeleteTemplate(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting emailTemplate", ex); }
-            try { await DoIfNotNull(smsTemplate?.TemplateID, async (string id) => await manager.DeleteTemplate(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting smsTemplate", ex); }
-            try { await DoIfNotNull(account?.AccountID, async (string id) => await manager.DeleteAccount(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleteing account", ex); }
-            try { await DoIfNotNull(organization?.OrganizationID, async (string id) => await manager.DeleteOrganization(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting organization", ex); }
+            try { await DoIfNotNull(emailBlock?.BlockID, async (string id) => await manager.DeleteBlockAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting emailBlock", ex); }
+            try { await DoIfNotNull(smsBlock?.BlockID, async (string id) => await manager.DeleteBlockAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting smsBlock", ex); }
+            try { await DoIfNotNull(emailSender?.SenderID, async (string id) => await manager.DeleteSenderAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting emailSender", ex); }
+            try { await DoIfNotNull(smsSender?.SenderID, async (string id) => await manager.DeleteSenderAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting smsSender", ex); }
+            try { await DoIfNotNull(emailTemplate?.TemplateID, async (string id) => await manager.DeleteTemplateAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting emailTemplate", ex); }
+            try { await DoIfNotNull(smsTemplate?.TemplateID, async (string id) => await manager.DeleteTemplateAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting smsTemplate", ex); }
+            try { await DoIfNotNull(account?.AccountID, async (string id) => await manager.DeleteAccountAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleteing account", ex); }
+            try { await DoIfNotNull(organization?.OrganizationID, async (string id) => await manager.DeleteOrganizationAsync(id)); } catch (Exception ex) { Console.WriteLine("🟥 Error deleting organization", ex); }
         }
     }
 
