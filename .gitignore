@@ -1,0 +1,15 @@
+.idea/
+
+# Build output
+bin/
+obj/
+
+# VSCode
+.vscode/*
+
+# Mac
+.ds_store
+
+# Dot Net
+*.user
+
