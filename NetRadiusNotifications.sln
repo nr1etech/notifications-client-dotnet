@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageClient", "MessageClient\MessageClient.csproj", "{FC58B6D9-4B78-405F-82A7-6DDF60E7A795}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManageClient", "ManageClient\ManageClient.csproj", "{1C44A947-A4C4-4211-BCF8-24161180729D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationsClientTest", "NotificationsClientTest\NotificationsClientTest.csproj", "{F62A8860-ABD8-4B6D-B3F2-4C41B5505772}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC58B6D9-4B78-405F-82A7-6DDF60E7A795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC58B6D9-4B78-405F-82A7-6DDF60E7A795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC58B6D9-4B78-405F-82A7-6DDF60E7A795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC58B6D9-4B78-405F-82A7-6DDF60E7A795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C44A947-A4C4-4211-BCF8-24161180729D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C44A947-A4C4-4211-BCF8-24161180729D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C44A947-A4C4-4211-BCF8-24161180729D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C44A947-A4C4-4211-BCF8-24161180729D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62A8860-ABD8-4B6D-B3F2-4C41B5505772}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62A8860-ABD8-4B6D-B3F2-4C41B5505772}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62A8860-ABD8-4B6D-B3F2-4C41B5505772}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62A8860-ABD8-4B6D-B3F2-4C41B5505772}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
