@@ -404,7 +404,15 @@ public static class ManageTest
 
             // ***** Manager Send Email tests *****
             Console.WriteLine("🟩 Manager Send Email Tests");
-            var createEmailMessageData = new CreateEmailMessage() { TemplateSlug = emailTemplate.Slug, TemplateLocale = emailTemplate.Locale, Recipient = new ManageClient.Models.Common.EmailRecipient() { Name = "Sanity Test", Email = "sanity@example.com" }, MergeValues = new MergeValues() { }, Metadata = new Dictionary<string, string>() { { "SentBy", "Sanity Test" } } };
+            var createEmailMessageData = new CreateEmailMessage()
+            {
+                TemplateSlug = emailTemplate.Slug,
+                TemplateLocale = emailTemplate.Locale,
+                Recipient = new ManageClient.Models.Common.EmailRecipient() { Name = "Sanity Test", Email = "sanity@example.com" },
+                MergeValues = new MergeValues() { },
+                Metadata = new Dictionary<string, string>() { { "SentBy", "Sanity Test" } },
+                SenderID = emailSender.SenderID,
+            };
             message1 = await manager.CreateEmailMessageAsync(createEmailMessageData, isTestMessage: false);
 
             if (string.IsNullOrEmpty(message1.MessageID))
@@ -424,7 +432,15 @@ public static class ManageTest
 
             // ***** Manager Send Sms tests *****
             Console.WriteLine("🟩 Manager Send SMS Tests");
-            message2 = await manager.CreateSmsMessageAsync(new CreateSmsMessage() { TemplateSlug = smsTemplate.Slug, TemplateLocale = smsTemplate.Locale, Recipient = new ManageClient.Models.Common.SmsRecipient() { Phone = "+18015550011" }, MergeValues = new MergeValues() {  }, Metadata = new Dictionary<string, string>() { { "SentBy", "Sanity Test"} } }, false);
+            message2 = await manager.CreateSmsMessageAsync(new CreateSmsMessage()
+            {
+                TemplateSlug = smsTemplate.Slug,
+                TemplateLocale = smsTemplate.Locale,
+                Recipient = new ManageClient.Models.Common.SmsRecipient() { Phone = "+18015550011" },
+                MergeValues = new MergeValues() {  },
+                Metadata = new Dictionary<string, string>() { { "SentBy", "Sanity Test"} },
+                SenderID = smsSender.SenderID,
+            }, false);
 
             var reManagerSmsMessage = await manager.GetMessageAsync(message2.MessageID);
 
@@ -467,7 +483,7 @@ public static class ManageTest
                     Thing2 = "$100.00",
                 },
                 Metadata = new Dictionary<string, string>() { { "sentBy", "Sanity Test" } },
-                SenderID = null,
+                SenderID = emailSender.SenderID,
             });
 
             // Reload the message and check that it handled the fallback
@@ -485,7 +501,7 @@ public static class ManageTest
                     Thing2 = "$100.00",
                 },
                 Metadata = new Dictionary<string, string>() { { "SentBy", "Sanity Test"} },
-                SenderID = null,
+                SenderID = smsSender.SenderID,
             });
         }
         catch (Exception ex)

@@ -20,6 +20,7 @@ public record Message
     public string TemplateID { get; set; }
     public string TemplateSlug { get; set; }
     public string TemplateLocale { get; set; }
+    public bool SendDraft { get; set; }
     public string FallbackOriginalLocale { get; set; }
     public RecipientBase Recipient { get; set; }
     public DateTime DateCreated { get; set; }

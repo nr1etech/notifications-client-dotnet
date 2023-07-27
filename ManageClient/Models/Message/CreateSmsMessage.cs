@@ -10,4 +10,5 @@ public record CreateSmsMessage
     public object? MergeValues { get; set; }
     public Dictionary<string, string>? Metadata { get; set; }
     public string? SenderID { get; set; }
+    public bool? SendDraft { get; set; }
 }
